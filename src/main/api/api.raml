@@ -1,0 +1,49 @@
+#%RAML 0.8
+
+title: Drug Samples API
+version: 1.0
+#baseUri: http://samples.example.org/{version}
+baseUri: http://mocksvc.mulesoft.com/mocks/a16d65a1-75cb-4f09-96d7-6fc3de4f6e07/{version}
+
+/samples:
+  displayName: Drug Sampke List
+  description: A List of drug samples..
+  get:
+    description: Get a list of all available samples
+    responses:      
+      200:
+        description: Returns a list of samples.
+        body:
+          application/json:
+            example: |
+              [
+                { "id":"123456",
+                  "name": "Foo Drug 1",
+                  "description": "A drug sample",                  
+                }
+                 { "id":"123456",
+                  "name": "Foo Drug 2",
+                  "description": "A drug sample",                  
+                }               
+              ]
+  post:
+    description: add a new sample.
+    body:
+      application/json:
+        example: |
+                { "name": "A medication",
+                  "description": "The medication's description",                 
+                }
+    responses:
+      201:
+        description: A new drug sample was created.
+        headers:
+          location:
+            description: "Relative URL of the created drug sample."
+            type: string
+            required: true
+            example: /samples/123456
+        body: null                
+  /{sampleId}:
+   get:
+     description: Get a particular sample by its Id.
